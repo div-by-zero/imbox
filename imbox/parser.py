@@ -75,7 +75,6 @@ def parse_attachment(message_part):
 
         if dispositions[0].lower() in ("attachment", "inline"):
             file_data = message_part.get_payload(decode=True)
-
             attachment = {
                 'content-type': message_part.get_content_type(),
                 'size': len(file_data),
@@ -86,7 +85,7 @@ def parse_attachment(message_part):
                 name, value = decode_param(param)
 
                 if 'file' in  name:
-                    attachment['filename'] = value
+                    attachment['filename'] = value.strip('"')
 
                 if 'create-date' in name:
                     attachment['create-date'] = value
